@@ -109,6 +109,11 @@ REST_FRAMEWORK = {
     ]
 }
 
+# Per-user resource limits. Override via environment variables if needed.
+USER_MAX_WORKOUT_TEMPLATES = int(os.getenv("USER_MAX_WORKOUT_TEMPLATES", "25"))
+USER_MAX_WORKOUT_PLANS = int(os.getenv("USER_MAX_WORKOUT_PLANS", "25"))
+USER_MAX_WORKOUTS = int(os.getenv("USER_MAX_WORKOUTS", "250"))
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',

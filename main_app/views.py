@@ -2,7 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.exceptions import ValidationError
+from rest_framework.filters import SearchFilter
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.conf import settings
+from .pagination import CatalogPagination
 from .serializers import ExerciseSerializer, MuscleGroupSerializer, UserSerializer, WorkoutSerializer, WorkoutItemSerializer, WorkoutTemplateSerializer, WorkoutTemplateItemSerializer, WorkoutPlanSerializer, WorkoutTemplatePlanSerializer, ProfileSerializer, WeightLogSerializer
 from .models import Exercise, MuscleGroup, Workout, WorkoutItem, WorkoutTemplate, WorkoutTemplateItem, WorkoutPlan, WorkoutTemplatePlan, Profile, WeightLog
 
@@ -168,6 +171,14 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 
         return qs
 
+    def perform_create(self, serializer):
+        if Workout.objects.filter(user=self.request.user).count() >= settings.USER_MAX_WORKOUTS:
+            raise ValidationError(
+                f"Workout limit of {settings.USER_MAX_WORKOUTS} reached. "
+                "Delete some past workouts before adding new ones."
+            )
+        serializer.save(user=self.request.user)
+
 class WorkoutItemViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutItemSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -184,6 +195,17 @@ class WorkoutItemViewSet(viewsets.ModelViewSet):
 class WorkoutTemplateViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutTemplateSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnlyPublic]
+    pagination_class = CatalogPagination
+    filter_backends = [SearchFilter]
+    search_fields = ["title"]
+
+    def perform_create(self, serializer):
+        if WorkoutTemplate.objects.filter(user=self.request.user).count() >= settings.USER_MAX_WORKOUT_TEMPLATES:
+            raise ValidationError(
+                f"Template limit of {settings.USER_MAX_WORKOUT_TEMPLATES} reached. "
+                "Delete some templates before creating new ones."
+            )
+        serializer.save(user=self.request.user)
 
     def get_permissions(self):
         # Schedule creates a workout for the current user from any template they can read
@@ -279,6 +301,17 @@ class WorkoutTemplateItemViewSet(viewsets.ModelViewSet):
 class WorkoutPlanViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutPlanSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnlyPublic]
+    pagination_class = CatalogPagination
+    filter_backends = [SearchFilter]
+    search_fields = ["title"]
+
+    def perform_create(self, serializer):
+        if WorkoutPlan.objects.filter(user=self.request.user).count() >= settings.USER_MAX_WORKOUT_PLANS:
+            raise ValidationError(
+                f"Plan limit of {settings.USER_MAX_WORKOUT_PLANS} reached. "
+                "Delete some plans before creating new ones."
+            )
+        serializer.save(user=self.request.user)
 
     def get_permissions(self):
         """

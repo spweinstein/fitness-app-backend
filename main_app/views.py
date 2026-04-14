@@ -35,6 +35,8 @@ from .services.workout_scheduling import (
     schedule_workout_from_template,
 )
 
+from rest_framework.throttling import ScopedRateThrottle, UserRateThrottle
+
 class ConflictError(Exception):
     def __init__(self, conflicts):
         self.conflicts = conflicts
@@ -44,6 +46,8 @@ class ConflictError(Exception):
 class CreateUserView(generics.CreateAPIView):
   queryset = User.objects.all()
   serializer_class = UserSerializer
+  throttle_classes = [ScopedRateThrottle]
+  throttle_scope = "auth"
 
   def create(self, request, *args, **kwargs):
     response = super().create(request, *args, **kwargs)
@@ -58,6 +62,8 @@ class CreateUserView(generics.CreateAPIView):
 # User Login
 class LoginView(APIView):
   permission_classes = [permissions.AllowAny]
+  throttle_classes = [ScopedRateThrottle]
+  throttle_scope = "auth"
 
   def post(self, request):
     username = request.data.get('username')
@@ -75,6 +81,8 @@ class LoginView(APIView):
 # User Verification
 class CurrentUserView(APIView):
   permission_classes = [permissions.IsAuthenticated]
+  throttle_classes = [ScopedRateThrottle]
+  throttle_scope = "auth"
 
   def get(self, request):
     user = request.user
@@ -85,6 +93,8 @@ class CurrentUserView(APIView):
 
 class RefreshTokenView(APIView):
   permission_classes = [permissions.AllowAny]
+  throttle_classes = [ScopedRateThrottle]
+  throttle_scope = "auth"
 
   def post(self, request):
     refresh_str = request.data.get('refresh')
@@ -109,6 +119,8 @@ class IsOwnerOrReadOnlyPublic(permissions.BasePermission):
 class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
 
     def get_queryset(self):
         # Limit profiles to the authenticated user
@@ -133,6 +145,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
 class WeightLogViewSet(viewsets.ModelViewSet):
     serializer_class = WeightLogSerializer
     permission_classes = [permissions.IsAuthenticated]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
 
     def get_queryset(self):
         return WeightLog.objects.filter(user=self.request.user).order_by("date")
@@ -144,10 +158,14 @@ class MuscleGroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MuscleGroup.objects.all().order_by("name")
     serializer_class = MuscleGroupSerializer
     permission_classes = [permissions.IsAuthenticated]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
 
 class ExerciseViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ExerciseSerializer
     permission_classes = [permissions.IsAuthenticated]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
 
     def get_queryset(self):
         """Exercises for list/detail with muscle_groups prefetched for serialization."""
@@ -156,6 +174,8 @@ class ExerciseViewSet(viewsets.ReadOnlyModelViewSet):
 class WorkoutViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutSerializer
     permission_classes = [permissions.IsAuthenticated]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
 
     def get_queryset(self):
         """Workouts for the current user with items, exercises, and muscle groups prefetched."""
@@ -193,7 +213,9 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 class WorkoutItemViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutItemSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
+    
     def get_queryset(self):
         return WorkoutItem.objects.filter(workout__user=self.request.user).order_by("order", "id")
 
@@ -209,6 +231,15 @@ class WorkoutTemplateViewSet(viewsets.ModelViewSet):
     pagination_class = CatalogPagination
     filter_backends = [SearchFilter]
     search_fields = ["title"]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
+
+    def get_throttles(self):
+        if getattr(self, "action", None) == "schedule":
+            self.throttle_scope = "schedule"
+        else:
+            self.throttle_scope = "user"
+        return super().get_throttles()
 
     def perform_create(self, serializer):
         if WorkoutTemplate.objects.filter(user=self.request.user).count() >= settings.USER_MAX_WORKOUT_TEMPLATES:
@@ -296,6 +327,8 @@ class WorkoutTemplateViewSet(viewsets.ModelViewSet):
 class WorkoutTemplateItemViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutTemplateItemSerializer
     permission_classes = [permissions.IsAuthenticated]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
 
     def get_queryset(self):
         # Only items belonging to templates you own (or public templates if you want view-only)
@@ -315,6 +348,16 @@ class WorkoutPlanViewSet(viewsets.ModelViewSet):
     pagination_class = CatalogPagination
     filter_backends = [SearchFilter]
     search_fields = ["title"]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
+
+
+    def get_throttles(self):
+        if getattr(self, "action", None) == "generate":
+            self.throttle_scope = "generate"
+        else:
+            self.throttle_scope = "user"
+        return super().get_throttles()
 
     def perform_create(self, serializer):
         if WorkoutPlan.objects.filter(user=self.request.user).count() >= settings.USER_MAX_WORKOUT_PLANS:
@@ -451,7 +494,9 @@ class WorkoutPlanViewSet(viewsets.ModelViewSet):
 class WorkoutTemplatePlanViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutTemplatePlanSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "user"
+    
     def get_queryset(self):
         qs = (
             WorkoutTemplatePlan.objects.select_related("plan", "template")

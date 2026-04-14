@@ -104,9 +104,21 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+        "rest_framework.throttling.ScopedRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "100/day",
+        "user": "30/min",
+        "auth": "20/min",
+        "schedule": "5/min",
+        "generate": "5/min",
+    },
 }
 
 # Per-user resource limits. Override via environment variables if needed.
@@ -205,8 +217,3 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
-
-STATIC_URL = 'static/'

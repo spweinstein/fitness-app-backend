@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
+
 load_dotenv(override=True)
 
 import dj_database_url  
@@ -33,10 +35,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-a^hyu87=6_@rw-mwu&@6bburo6ib!7=5sj03o-!&9##j9kq0%m'
-# NEW
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-insecure-key")  # NEW
-DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"     # NEW
+# DEBUG must be defined before SECRET_KEY so non-debug deploys cannot fall back to a dev key.
+DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
+
+_django_secret_key = (os.getenv("DJANGO_SECRET_KEY") or "").strip()
+if not DEBUG and not _django_secret_key:
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY must be set when DEBUG is False. "
+        "Set DJANGO_SECRET_KEY in the environment for production/staging."
+    )
+SECRET_KEY = _django_secret_key or "dev-insecure-key"
 
 ALLOWED_HOSTS = os.getenv(                                      # NEW
     "DJANGO_ALLOWED_HOSTS",
@@ -50,9 +58,12 @@ CSRF_TRUSTED_ORIGINS = os.getenv(                               # NEW
 
 from datetime import timedelta
 
+_jwt_access_minutes = int(os.getenv("JWT_ACCESS_TOKEN_LIFETIME_MINUTES", "60"))
+_jwt_refresh_days = int(os.getenv("JWT_REFRESH_TOKEN_LIFETIME_DAYS", "7"))
+
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=_jwt_access_minutes),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=_jwt_refresh_days),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,
@@ -126,11 +137,18 @@ WSGI_APPLICATION = 'hw_app.wsgi.application'
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+_db_ssl_env = os.getenv("DATABASE_SSL_REQUIRE")
+if _db_ssl_env is not None:
+    _database_ssl_require = _db_ssl_env.strip().lower() in ("1", "true", "yes", "on")
+else:
+    # Prefer TLS for non-debug deploys; local SQLite/dev often unset or non-TLS.
+    _database_ssl_require = not DEBUG
+
 DATABASES = {
     "default": dj_database_url.parse(
         DATABASE_URL,
         conn_max_age=600,
-        ssl_require=False,  # set True if your host requires SSL (e.g. many cloud DBs)
+        ssl_require=_database_ssl_require,
     )
 }
 

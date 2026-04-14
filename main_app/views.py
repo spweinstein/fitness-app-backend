@@ -19,6 +19,7 @@ from rest_framework.decorators import action
 from django.utils import timezone
 from rest_framework import status
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.http import Http404
 from rest_framework.exceptions import PermissionDenied
 
 from .services.workout_scheduling import (
@@ -71,8 +72,8 @@ class VerifyUserView(APIView):
   permission_classes = [permissions.IsAuthenticated]
 
   def get(self, request):
-    user = User.objects.get(username=request.user)  # Fetch user profile
-    refresh = RefreshToken.for_user(request.user)  # Generate new refresh token
+    user = request.user
+    refresh = RefreshToken.for_user(user)
     return Response({
       'refresh': str(refresh),
       'access': str(refresh.access_token),
@@ -100,9 +101,17 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return Profile.objects.filter(user=self.request.user)
 
     def get_object(self):
-        # Always return (and if needed, create) the profile for the current user,
-        # so frontend calls like /api/profiles/<userId>/ work even if the profile
-        # doesn't yet exist.
+        # Client passes the authenticated user's id in the URL (see profileServices).
+        # Enforce pk == current user so the path cannot be used to probe other ids.
+        # A migration to support public profiles may require revisiting this (e.g. allow
+        # read access by profile pk or public flag).
+        pk = self.kwargs.get(self.lookup_field or "pk")
+        try:
+            pk_int = int(pk)
+        except (TypeError, ValueError):
+            raise Http404()
+        if pk_int != self.request.user.pk:
+            raise Http404()
         profile, _ = Profile.objects.get_or_create(user=self.request.user)
         return profile
 
@@ -123,16 +132,28 @@ class MuscleGroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 class ExerciseViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Exercise.objects.all().order_by("name")
     serializer_class = ExerciseSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """Exercises for list/detail with muscle_groups prefetched for serialization."""
+        return Exercise.objects.prefetch_related("muscle_groups").order_by("name")
 
 class WorkoutViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        qs = Workout.objects.filter(user=self.request.user).order_by("start_dt", "id")
+        """Workouts for the current user with items, exercises, and muscle groups prefetched."""
+        items_qs = WorkoutItem.objects.select_related("exercise").prefetch_related(
+            "exercise__muscle_groups"
+        ).order_by("order", "id")
+        items_prefetch = Prefetch("items", queryset=items_qs)
+        qs = (
+            Workout.objects.filter(user=self.request.user)
+            .prefetch_related(items_prefetch)
+            .order_by("start_dt", "id")
+        )
 
         # Optional date filtering for calendar views:
         # GET /api/workouts/?start=2026-03-01T00:00:00Z&end=2026-04-01T00:00:00Z
@@ -359,7 +380,6 @@ class WorkoutPlanViewSet(viewsets.ModelViewSet):
             ordered_links=ordered_links,
             tz=tz,
         )
-        print(candidate_slots)
 
         try:
             created_ids = create_workouts_from_plan_slots_atomic(

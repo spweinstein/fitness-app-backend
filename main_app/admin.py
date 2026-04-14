@@ -5,6 +5,7 @@ from django.contrib import messages
 
 @admin.action(description="Create workout from template")
 def create_workout_from_template(modeladmin, request, queryset):
+    """Copy template items onto a new Workout using matching WorkoutItem field names."""
     if queryset.count() > 1:
         modeladmin.message_user(request, "Please select only one template at a time.", level="error")
         return
@@ -22,12 +23,16 @@ def create_workout_from_template(modeladmin, request, queryset):
         WorkoutItem.objects.create(
             workout=workout,
             exercise=template_item.exercise,
+            order=template_item.order,
             sets=template_item.sets,
             reps=template_item.reps,
             weight=template_item.weight,
             weight_unit=template_item.weight_unit,
-            duration_seconds=template_item.duration_seconds,
-            distance_meters=template_item.distance_meters
+            duration=template_item.duration,
+            distance=template_item.distance,
+            distance_unit=template_item.distance_unit,
+            rpe=template_item.rpe,
+            notes=template_item.notes,
         )
         
     modeladmin.message_user(request, f"Workout '{workout.title}' created successfully.")

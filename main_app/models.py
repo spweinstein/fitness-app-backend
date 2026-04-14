@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 from django.db import models
 from django.conf import settings
 from django.db.models import Q
@@ -39,6 +41,21 @@ class MuscleGroup(models.Model):
         return self.name
 
 
+def _allowed_exercise_video_host(hostname: str) -> bool:
+    """Return True if hostname is a known embed-friendly video host."""
+    h = (hostname or "").lower()
+    if h in (
+        "youtu.be",
+        "youtube.com",
+        "m.youtube.com",
+        "www.youtube.com",
+        "vimeo.com",
+        "player.vimeo.com",
+    ):
+        return True
+    return h.endswith(".youtube.com")
+
+
 class Exercise(models.Model):
     class ExerciseType(models.TextChoices):
         STRENGTH = "strength", "Strength"
@@ -60,9 +77,30 @@ class Exercise(models.Model):
     instructions = models.TextField(blank=True)
     video_url = models.URLField(blank=True)
 
+    def clean(self):
+        super().clean()
+        if not self.video_url:
+            return
+        parsed = urlparse(str(self.video_url).strip())
+        if parsed.scheme not in ("http", "https"):
+            raise ValidationError(
+                {"video_url": "Video URL must use http or https."}
+            )
+        if not _allowed_exercise_video_host(parsed.hostname or ""):
+            raise ValidationError(
+                {
+                    "video_url": "Video URL must be from YouTube or Vimeo (allowed embed hosts)."
+                }
+            )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     def __str__(self) -> str:
         return self.name
-    
+
+
 class WorkoutTemplate(models.Model):
     """
     Reusable routine users can copy/share and attach to WorkoutPlans.

@@ -8,6 +8,7 @@ from rest_framework import serializers as drf_serializers
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .admin import create_workout_from_template
 from .models import (
@@ -370,17 +371,47 @@ class WorkoutListQueryCountTests(TestCase):
         self.assertEqual(len(resp.data), 3)
 
 
-class VerifyUserViewTests(TestCase):
-    """LOGIC-002: authenticated GET must return tokens and the current user without a bogus DB lookup."""
+class CurrentUserViewTests(TestCase):
+    """LOGIC-002a: GET /users/me/ returns the serialized user for authenticated requests."""
 
     def setUp(self):
         self.user = User.objects.create_user("verifyuser", password="testpass123")
         self.client = APIClient()
-        self.client.force_authenticate(user=self.user)
 
-    def test_get_returns_tokens_and_current_user(self):
-        resp = self.client.get("/users/token/refresh/")
+    def test_get_returns_current_user(self):
+        self.client.force_authenticate(user=self.user)
+        resp = self.client.get("/users/me/")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertIn("user", resp.data)
+        self.assertEqual(resp.data["user"]["username"], "verifyuser")
+
+    def test_unauthenticated_returns_401(self):
+        resp = self.client.get("/users/me/")
+        self.assertEqual(resp.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class RefreshTokenViewTests(TestCase):
+    """LOGIC-002b: POST /users/token/refresh/ validates a refresh token and returns a new access token."""
+
+    def setUp(self):
+        self.user = User.objects.create_user("refreshuser", password="testpass123")
+        self.client = APIClient()
+
+    def test_post_with_valid_token_returns_access(self):
+        refresh = RefreshToken.for_user(self.user)
+        resp = self.client.post(
+            "/users/token/refresh/",
+            {"refresh": str(refresh)},
+            format="json",
+        )
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertIn("access", resp.data)
-        self.assertIn("refresh", resp.data)
-        self.assertEqual(resp.data["user"]["username"], "verifyuser")
+
+    def test_post_with_invalid_token_returns_400(self):
+        resp = self.client.post(
+            "/users/token/refresh/",
+            {"refresh": "not.a.valid.token"},
+            format="json",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("error", resp.data)

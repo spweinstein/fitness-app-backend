@@ -22,6 +22,10 @@ Copy `.env.example` to `.env`. Settings load via `python-dotenv` in `hw_app/sett
 
 **Production:** Set `DJANGO_SECRET_KEY` to a strong secret. When `DJANGO_DEBUG` is false (or unset), Django will refuse to start if `DJANGO_SECRET_KEY` is missing, so deployments without a dev fallback key cannot boot accidentally.
 
+**Database TLS:** `DATABASE_SSL_REQUIRE` overrides whether `dj-database-url` uses `ssl_require` when parsing `DATABASE_URL`. If unset, non-debug (`DEBUG=False`) defaults to requiring SSL; set `DATABASE_SSL_REQUIRE=false` for local Postgres without TLS.
+
+**JWT:** Access and refresh lifetimes are configurable via `JWT_ACCESS_TOKEN_LIFETIME_MINUTES` (default `60`) and `JWT_REFRESH_TOKEN_LIFETIME_DAYS` (default `7`). The SPA should refresh tokens before access expiry; shorter access tokens reduce exposure if a token is leaked.
+
 ## Legacy
 
 **`hw-app-backend`** is **read-only** reference during migration; new backend work belongs here.

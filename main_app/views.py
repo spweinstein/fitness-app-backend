@@ -359,7 +359,6 @@ class WorkoutPlanViewSet(viewsets.ModelViewSet):
             ordered_links=ordered_links,
             tz=tz,
         )
-        print(candidate_slots)
 
         try:
             created_ids = create_workouts_from_plan_slots_atomic(

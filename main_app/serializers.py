@@ -321,21 +321,12 @@ class WorkoutPlanSerializer(serializers.ModelSerializer):
         return instance
 
     def to_representation(self, instance):
-        # Override to ensure template_links are properly ordered
-        try:
-            representation = super().to_representation(instance)
-            if 'template_links' in representation and representation['template_links']:
-                # Ensure they're sorted by order, then id
-                representation['template_links'].sort(
-                    key=lambda x: (x.get('order', 0), x.get('id', 0))
-                )
-            return representation
-        except Exception as e:
-            # Log the error but don't crash
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.error(f"Error serializing WorkoutPlan {instance.id}: {e}")
-            # Return basic representation without template_links
-            representation = super().to_representation(instance)
-            representation['template_links'] = []
-            return representation
+        # Ensure template_links are ordered; do not mask serialization failures as empty data.
+        representation = super().to_representation(instance)
+        links = representation.get("template_links")
+        if links:
+            representation["template_links"] = sorted(
+                links,
+                key=lambda x: (x.get("order", 0), x.get("id", 0)),
+            )
+        return representation

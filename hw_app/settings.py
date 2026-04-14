@@ -58,9 +58,12 @@ CSRF_TRUSTED_ORIGINS = os.getenv(                               # NEW
 
 from datetime import timedelta
 
+_jwt_access_minutes = int(os.getenv("JWT_ACCESS_TOKEN_LIFETIME_MINUTES", "60"))
+_jwt_refresh_days = int(os.getenv("JWT_REFRESH_TOKEN_LIFETIME_DAYS", "7"))
+
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=_jwt_access_minutes),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=_jwt_refresh_days),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,
@@ -134,11 +137,18 @@ WSGI_APPLICATION = 'hw_app.wsgi.application'
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+_db_ssl_env = os.getenv("DATABASE_SSL_REQUIRE")
+if _db_ssl_env is not None:
+    _database_ssl_require = _db_ssl_env.strip().lower() in ("1", "true", "yes", "on")
+else:
+    # Prefer TLS for non-debug deploys; local SQLite/dev often unset or non-TLS.
+    _database_ssl_require = not DEBUG
+
 DATABASES = {
     "default": dj_database_url.parse(
         DATABASE_URL,
         conn_max_age=600,
-        ssl_require=False,  # set True if your host requires SSL (e.g. many cloud DBs)
+        ssl_require=_database_ssl_require,
     )
 }
 

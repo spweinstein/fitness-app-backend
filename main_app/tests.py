@@ -1,8 +1,10 @@
 from datetime import date, datetime, time as time_cls, timedelta
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.test import RequestFactory, TestCase
+from rest_framework import serializers as drf_serializers
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -17,6 +19,7 @@ from .models import (
     WorkoutTemplateItem,
     WorkoutTemplatePlan,
 )
+from .serializers import WorkoutPlanSerializer
 from .services.workout_scheduling import (
     build_plan_slots_for_date_range,
     parse_inclusive_end_date,
@@ -154,7 +157,11 @@ class PlanGenerateAPITests(TestCase):
         url = f"/api/workout-plans/{self.plan.id}/generate/"
         resp = self.client.post(
             url,
-            {"start_dt": start.isoformat(), "end_dt": end_d.isoformat()},
+            {
+                "start_dt": start.isoformat(),
+                "end_dt": end_d.isoformat(),
+                "tz": "UTC",
+            },
             format="json",
         )
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
@@ -264,3 +271,44 @@ class CreateWorkoutFromTemplateAdminActionTests(TestCase):
         self.assertEqual(item.rpe, 8)
         self.assertEqual(item.notes, "keep chest up")
         self.assertEqual(WorkoutItem.objects.filter(workout=workout).count(), 1)
+
+
+class ExerciseVideoUrlValidationTests(TestCase):
+    """SEC-004: video_url must use allowed embed hosts."""
+
+    def test_accepts_youtube_embed_url(self):
+        ex = Exercise(
+            name="YouTube Move",
+            exercise_type="strength",
+            video_url="https://www.youtube.com/embed/dQw4w9WgXcQ",
+        )
+        ex.save()
+
+    def test_rejects_non_allowed_host(self):
+        ex = Exercise(
+            name="Bad Embed",
+            exercise_type="strength",
+            video_url="https://evil.example.com/video",
+        )
+        with self.assertRaises(ValidationError):
+            ex.save()
+
+
+class WorkoutPlanSerializerErrorPropagationTests(TestCase):
+    """SER-001: serialization errors must not be replaced with empty template_links."""
+
+    def setUp(self):
+        self.user = User.objects.create_user("ser001", password="testpass123")
+        self.plan = WorkoutPlan.objects.create(user=self.user, title="Ser Plan")
+
+    @patch.object(
+        drf_serializers.ModelSerializer,
+        "to_representation",
+        side_effect=RuntimeError("simulated serialization failure"),
+    )
+    def test_to_representation_propagates_errors(self, _mock):
+        serializer = WorkoutPlanSerializer(
+            instance=self.plan, context={"request": MagicMock()}
+        )
+        with self.assertRaises(RuntimeError):
+            serializer.to_representation(self.plan)

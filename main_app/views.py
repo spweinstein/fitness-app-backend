@@ -81,8 +81,6 @@ class LoginView(APIView):
 # User Verification
 class CurrentUserView(APIView):
   permission_classes = [permissions.IsAuthenticated]
-  throttle_classes = [ScopedRateThrottle]
-  throttle_scope = "auth"
 
   def get(self, request):
     user = request.user

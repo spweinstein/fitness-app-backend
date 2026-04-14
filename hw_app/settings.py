@@ -67,7 +67,7 @@ CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf_origins_env.split(",") if o.str
 
 from datetime import timedelta
 
-_jwt_access_minutes = int(os.getenv("JWT_ACCESS_TOKEN_LIFETIME_MINUTES", "60"))
+_jwt_access_minutes = int(os.getenv("JWT_ACCESS_TOKEN_LIFETIME_MINUTES", "15"))
 _jwt_refresh_days = int(os.getenv("JWT_REFRESH_TOKEN_LIFETIME_DAYS", "7"))
 
 SIMPLE_JWT = {

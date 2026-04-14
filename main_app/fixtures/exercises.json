@@ -994,5 +994,365 @@
       "video_url": "https://www.youtube.com/embed/6m_fjNhRhkY",
       "muscle_groups": [6, 7, 8, 9]
     }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 84,
+    "fields": {
+      "name": "Standing Quad Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Stand on one foot and pull the opposite ankle toward your glutes. Keep knees together and hold for 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [6]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 85,
+    "fields": {
+      "name": "Kneeling Hip Flexor Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Kneel on one knee with the other foot forward. Shift hips forward gently until a stretch is felt in the front of the rear hip. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [19]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 86,
+    "fields": {
+      "name": "Seated Hamstring Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Sit on the floor with legs straight. Hinge at the hips and reach toward your toes. Keep your back flat. Hold 30 seconds.",
+      "video_url": "",
+      "muscle_groups": [7]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 87,
+    "fields": {
+      "name": "Lying Glute Stretch (Figure-4)",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Lie on your back and cross one ankle over the opposite knee. Pull the uncrossed leg toward your chest until a stretch is felt in the glute. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [8]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 88,
+    "fields": {
+      "name": "Pigeon Pose",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "From a plank, bring one knee forward and let the shin rest on the floor at an angle. Lower hips toward the ground and hold for 45 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [8, 19]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 89,
+    "fields": {
+      "name": "Standing Calf Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Stand facing a wall. Place one foot back with heel flat on the floor. Lean forward until a stretch is felt in the calf. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [9]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 90,
+    "fields": {
+      "name": "Adductor Butterfly Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Sit with the soles of your feet together and knees out to the sides. Gently press knees toward the floor and lean forward. Hold 30 seconds.",
+      "video_url": "",
+      "muscle_groups": [19]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 91,
+    "fields": {
+      "name": "Wide-Leg Forward Fold",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Stand with feet wide apart. Hinge at the hips and lower your torso toward the floor, letting the arms hang or rest on the ground. Hold 30 seconds.",
+      "video_url": "",
+      "muscle_groups": [7, 8]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 92,
+    "fields": {
+      "name": "90/90 Hip Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Sit with both legs bent at 90 degrees, one in front and one to the side. Stay tall through the spine and hold 30 seconds, then switch sides.",
+      "video_url": "",
+      "muscle_groups": [8, 19]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 93,
+    "fields": {
+      "name": "Frog Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "On hands and knees, widen your knees as far as comfortable with feet in line with knees. Shift hips back gently. Hold 45 seconds.",
+      "video_url": "",
+      "muscle_groups": [8, 19]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 94,
+    "fields": {
+      "name": "Child's Pose",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Kneel on the floor, sit back on your heels, and extend arms forward on the floor. Let your chest sink toward the ground. Hold 45 seconds.",
+      "video_url": "",
+      "muscle_groups": [21, 2]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 95,
+    "fields": {
+      "name": "Cat-Cow",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "On hands and knees, alternate between arching your back upward (cat) and letting it sag downward (cow). Move slowly with your breath for 10 repetitions.",
+      "video_url": "",
+      "muscle_groups": [21, 10]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 96,
+    "fields": {
+      "name": "Seated Spinal Twist",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Sit tall with legs extended. Cross one foot over the opposite knee and rotate your torso toward the bent knee. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [21, 20]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 97,
+    "fields": {
+      "name": "Supine Knee-to-Chest",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Lie on your back and pull both knees toward your chest. Rock gently side to side. Hold 30 seconds.",
+      "video_url": "",
+      "muscle_groups": [21]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 98,
+    "fields": {
+      "name": "Thoracic Extension on Foam Roller",
+      "exercise_type": "flexibility",
+      "equipment": "other",
+      "instructions": "Place a foam roller horizontally under your mid-back. Support your head with your hands and gently extend over the roller. Hold 30 seconds and reposition up the spine.",
+      "video_url": "",
+      "muscle_groups": [21, 2]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 99,
+    "fields": {
+      "name": "Cross-Body Shoulder Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Bring one arm across your chest and press it gently with the opposite arm. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [3, 15]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 100,
+    "fields": {
+      "name": "Doorway Chest Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Stand in a doorway with arms at 90 degrees on the frame. Step one foot forward and lean gently through the doorway. Hold 30 seconds.",
+      "video_url": "",
+      "muscle_groups": [1, 16]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 101,
+    "fields": {
+      "name": "Sleeper Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Lie on your side with your bottom arm at 90 degrees. Use the top hand to gently press the bottom wrist toward the floor. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [15]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 102,
+    "fields": {
+      "name": "Overhead Tricep Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Raise one arm overhead and bend the elbow so the hand reaches behind your head. Use the opposite hand to press the elbow gently. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [26, 27, 28]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 103,
+    "fields": {
+      "name": "Shoulder Pendulum Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Lean forward with one hand supported on a surface. Let the opposite arm hang freely and make small circles. Perform for 30 seconds each direction.",
+      "video_url": "",
+      "muscle_groups": [3]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 104,
+    "fields": {
+      "name": "Eagle Arm Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Cross one arm under the other at the elbow and wrap the forearms together. Lift elbows slightly and hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [3, 15]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 105,
+    "fields": {
+      "name": "Neck Side Tilt",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Sit tall and tilt your head toward one shoulder. Optionally use the same-side hand to add gentle pressure. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [3, 14]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 106,
+    "fields": {
+      "name": "Chin Tuck",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Stand or sit tall and gently draw your chin straight back, creating a double-chin effect. Hold 5 seconds and repeat 10 times.",
+      "video_url": "",
+      "muscle_groups": [14]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 107,
+    "fields": {
+      "name": "Upper Trap Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Sit tall and reach one hand behind your back. Tilt your head away and forward until you feel a stretch along the top of the shoulder. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [14]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 108,
+    "fields": {
+      "name": "Levator Scapulae Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Turn your head 45 degrees to one side and tilt your chin toward your armpit. Use the same-side hand to add gentle downward pressure on your head. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [14, 2]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 109,
+    "fields": {
+      "name": "Bicep Wall Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Stand beside a wall and place one palm flat against it at shoulder height. Slowly rotate your body away until a stretch is felt in the bicep. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [4]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 110,
+    "fields": {
+      "name": "Wrist Flexor Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Extend one arm forward with palm facing up. Use the opposite hand to gently pull the fingers down toward the floor. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [18]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 111,
+    "fields": {
+      "name": "Wrist Extensor Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Extend one arm forward with palm facing down. Use the opposite hand to gently press the back of the hand down and toward you. Hold 30 seconds each side.",
+      "video_url": "",
+      "muscle_groups": [18]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 112,
+    "fields": {
+      "name": "Prayer Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Place palms together in front of your chest in prayer position. Slowly lower the hands toward your waist while keeping palms together until you feel a stretch in the forearms. Hold 30 seconds.",
+      "video_url": "",
+      "muscle_groups": [18]
+    }
+  },
+  {
+    "model": "main_app.exercise",
+    "pk": 113,
+    "fields": {
+      "name": "Pronator/Supinator Stretch",
+      "exercise_type": "flexibility",
+      "equipment": "bodyweight",
+      "instructions": "Extend one arm forward. Slowly rotate the forearm palm-up then palm-down through its full range. Pause at end range for 5 seconds. Perform 10 slow rotations each arm.",
+      "video_url": "",
+      "muscle_groups": [18, 25]
+    }
   }
 ]

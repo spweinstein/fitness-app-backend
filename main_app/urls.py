@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import MuscleGroupViewSet, ExerciseViewSet, WorkoutViewSet, WorkoutItemViewSet, WorkoutTemplateViewSet, WorkoutTemplateItemViewSet, WorkoutPlanViewSet, WorkoutTemplatePlanViewSet, CreateUserView, LoginView, VerifyUserView, WeightLogViewSet, ProfileViewSet
+from .views import MuscleGroupViewSet, ExerciseViewSet, WorkoutViewSet, WorkoutItemViewSet, WorkoutTemplateViewSet, WorkoutTemplateItemViewSet, WorkoutPlanViewSet, WorkoutTemplatePlanViewSet, CreateUserView, LoginView, CurrentUserView, RefreshTokenView, WeightLogViewSet, ProfileViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -18,5 +18,6 @@ urlpatterns = [
   path('api/', include(router.urls)),
   path('users/register/', CreateUserView.as_view(), name='register'),
   path('users/login/', LoginView.as_view(), name='login'),
-  path('users/token/refresh/', VerifyUserView.as_view(), name='token_refresh'),
+  path('users/token/refresh/', RefreshTokenView.as_view(), name='token_refresh'),
+  path('users/me/', CurrentUserView.as_view(), name='me'),
 ]

@@ -19,12 +19,15 @@ load_dotenv(override=True)
 
 import dj_database_url  
 
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Adjust the port if your frontend runs on a different one
+_DEFAULT_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
     "https://healthwealthapp.netlify.app",
     "https://hw-fitness.netlify.app",
+    "https://fitness-app-frontend.netlify.app",
+    "https://fitness-app-backend.up.railway.app"
 ]
+
+CORS_ALLOWED_ORIGINS = os.getenv("CORS_TRUSTED_ORIGINS", ",".join(_DEFAULT_TRUSTED_ORIGINS)).split(",")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,12 +51,12 @@ SECRET_KEY = _django_secret_key or "dev-insecure-key"
 
 ALLOWED_HOSTS = os.getenv(                                      # NEW
     "DJANGO_ALLOWED_HOSTS",
-    "hw-app-backend-production.up.railway.app,localhost,127.0.0.1,healthwealthapp.netlify.app,hw-fitness.netlify.app,hw-app-backend-v2-production.up.railway.app",
+    ",".join(_DEFAULT_TRUSTED_ORIGINS)
 ).split(",")
 
 CSRF_TRUSTED_ORIGINS = os.getenv(                               # NEW
     "CSRF_TRUSTED_ORIGINS",
-    "https://healthwealthapp.netlify.app,https://hw-fitness.netlify.app,https://hw-app-backend-v2-production.up.railway.app"
+    ",".join(_DEFAULT_TRUSTED_ORIGINS)
 ).split(",")
 
 from datetime import timedelta

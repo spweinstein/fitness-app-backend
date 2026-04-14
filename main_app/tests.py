@@ -12,6 +12,8 @@ from rest_framework.test import APIClient
 from .admin import create_workout_from_template
 from .models import (
     Exercise,
+    MuscleGroup,
+    Profile,
     Workout,
     WorkoutItem,
     WorkoutPlan,
@@ -312,3 +314,73 @@ class WorkoutPlanSerializerErrorPropagationTests(TestCase):
         )
         with self.assertRaises(RuntimeError):
             serializer.to_representation(self.plan)
+
+
+class ProfileViewSetPkContractTests(TestCase):
+    """API-003: detail URL pk must match the authenticated user's id."""
+
+    def setUp(self):
+        self.user_a = User.objects.create_user("prof_a", password="testpass123")
+        self.user_b = User.objects.create_user("prof_b", password="testpass123")
+        self.client = APIClient()
+
+    def test_detail_404_when_pk_not_current_user(self):
+        self.client.force_authenticate(user=self.user_a)
+        url = f"/api/profiles/{self.user_b.pk}/"
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_detail_200_and_creates_profile_when_pk_matches(self):
+        self.client.force_authenticate(user=self.user_a)
+        url = f"/api/profiles/{self.user_a.pk}/"
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertTrue(Profile.objects.filter(user=self.user_a).exists())
+
+
+class WorkoutListQueryCountTests(TestCase):
+    """PERF-001: list endpoint prefetches items and nested exercise muscle groups."""
+
+    def setUp(self):
+        self.user = User.objects.create_user("perfuser", password="testpass123")
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user)
+        mg = MuscleGroup.objects.create(name="Quads")
+        self.ex = Exercise.objects.create(name="Squat", exercise_type="strength")
+        self.ex.muscle_groups.add(mg)
+        base = timezone.now().replace(microsecond=0)
+        for i in range(3):
+            start = base + timedelta(days=i)
+            w = Workout.objects.create(
+                user=self.user,
+                title="W",
+                start_dt=start,
+                end_dt=start + timedelta(minutes=45),
+            )
+            WorkoutItem.objects.create(
+                workout=w, exercise=self.ex, order=0, sets=3, reps=5
+            )
+
+    def test_workout_list_query_count_bounded(self):
+        # Without per-item prefetch this would scale with workouts × items (N+1).
+        # Expected: workouts list, prefetched items+exercises, M2M muscle_groups for exercises.
+        with self.assertNumQueries(3):
+            resp = self.client.get("/api/workouts/")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(resp.data), 3)
+
+
+class VerifyUserViewTests(TestCase):
+    """LOGIC-002: authenticated GET must return tokens and the current user without a bogus DB lookup."""
+
+    def setUp(self):
+        self.user = User.objects.create_user("verifyuser", password="testpass123")
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user)
+
+    def test_get_returns_tokens_and_current_user(self):
+        resp = self.client.get("/users/token/refresh/")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertIn("access", resp.data)
+        self.assertIn("refresh", resp.data)
+        self.assertEqual(resp.data["user"]["username"], "verifyuser")

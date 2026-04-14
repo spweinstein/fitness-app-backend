@@ -16,6 +16,16 @@ pipenv run python manage.py runserver
 
 Adjust commands if you use another virtualenv workflow, but Pipenv is what this tree ships with.
 
+## Tests
+
+After `pipenv install`, run the Django test suite from this directory:
+
+```bash
+pipenv run python manage.py test
+```
+
+That installs and uses the same dependencies as the app (including `djangorestframework-simplejwt`). A clean checkout that skips `pipenv install` will fail with `ModuleNotFoundError` for missing packages.
+
 ## Environment
 
 Copy `.env.example` to `.env`. Settings load via `python-dotenv` in `hw_app/settings.py` (`load_dotenv(override=True)`).

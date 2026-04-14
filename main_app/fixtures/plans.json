@@ -256,5 +256,275 @@
       "order": 4,
       "time": "18:00:00"
     }
+  },
+  {
+    "model": "main_app.workoutplan",
+    "pk": 205,
+    "fields": {
+      "user": 1,
+      "title": "Daily Hip Mobility Program",
+      "description": "Three-day weekly program targeting hip flexors, glutes, and the full lower body for improved hip health.",
+      "is_public": true,
+      "created_at": "2026-03-01T00:00:00Z",
+      "updated_at": "2026-03-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "main_app.workoutplan",
+    "pk": 206,
+    "fields": {
+      "user": 1,
+      "title": "Lower Back Health Routine",
+      "description": "Three-day weekly program to relieve lower back tension and improve spinal mobility.",
+      "is_public": true,
+      "created_at": "2026-03-01T00:00:00Z",
+      "updated_at": "2026-03-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "main_app.workoutplan",
+    "pk": 207,
+    "fields": {
+      "user": 1,
+      "title": "Upper Body Mobility & Recovery",
+      "description": "Three-day weekly program for shoulder, chest, and upper back mobility and injury prevention.",
+      "is_public": true,
+      "created_at": "2026-03-01T00:00:00Z",
+      "updated_at": "2026-03-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "main_app.workoutplan",
+    "pk": 208,
+    "fields": {
+      "user": 1,
+      "title": "Full Body Morning Mobility",
+      "description": "Daily morning routine with gentle full-body stretches to start every day.",
+      "is_public": true,
+      "created_at": "2026-03-01T00:00:00Z",
+      "updated_at": "2026-03-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "main_app.workoutplan",
+    "pk": 209,
+    "fields": {
+      "user": 1,
+      "title": "Post-Workout Stretch Program",
+      "description": "Five-day weekly cool-down program to reduce soreness and improve recovery.",
+      "is_public": true,
+      "created_at": "2026-03-01T00:00:00Z",
+      "updated_at": "2026-03-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3501,
+    "fields": {
+      "plan": 205,
+      "template": 110,
+      "order": 1,
+      "time": "08:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3502,
+    "fields": {
+      "plan": 205,
+      "template": 111,
+      "order": 2,
+      "time": "08:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3503,
+    "fields": {
+      "plan": 205,
+      "template": 116,
+      "order": 3,
+      "time": "08:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3601,
+    "fields": {
+      "plan": 206,
+      "template": 112,
+      "order": 1,
+      "time": "08:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3602,
+    "fields": {
+      "plan": 206,
+      "template": 116,
+      "order": 2,
+      "time": "08:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3603,
+    "fields": {
+      "plan": 206,
+      "template": 112,
+      "order": 3,
+      "time": "08:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3701,
+    "fields": {
+      "plan": 207,
+      "template": 113,
+      "order": 1,
+      "time": "08:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3702,
+    "fields": {
+      "plan": 207,
+      "template": 114,
+      "order": 2,
+      "time": "08:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3703,
+    "fields": {
+      "plan": 207,
+      "template": 117,
+      "order": 3,
+      "time": "08:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3801,
+    "fields": {
+      "plan": 208,
+      "template": 118,
+      "order": 1,
+      "time": "07:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3802,
+    "fields": {
+      "plan": 208,
+      "template": 118,
+      "order": 2,
+      "time": "07:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3803,
+    "fields": {
+      "plan": 208,
+      "template": 118,
+      "order": 3,
+      "time": "07:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3804,
+    "fields": {
+      "plan": 208,
+      "template": 118,
+      "order": 4,
+      "time": "07:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3805,
+    "fields": {
+      "plan": 208,
+      "template": 118,
+      "order": 5,
+      "time": "07:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3806,
+    "fields": {
+      "plan": 208,
+      "template": 118,
+      "order": 6,
+      "time": "07:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3807,
+    "fields": {
+      "plan": 208,
+      "template": 118,
+      "order": 7,
+      "time": "07:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3901,
+    "fields": {
+      "plan": 209,
+      "template": 119,
+      "order": 1,
+      "time": "19:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3902,
+    "fields": {
+      "plan": 209,
+      "template": 119,
+      "order": 2,
+      "time": "19:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3903,
+    "fields": {
+      "plan": 209,
+      "template": 119,
+      "order": 3,
+      "time": "19:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3904,
+    "fields": {
+      "plan": 209,
+      "template": 119,
+      "order": 4,
+      "time": "19:00:00"
+    }
+  },
+  {
+    "model": "main_app.workouttemplateplan",
+    "pk": 3905,
+    "fields": {
+      "plan": 209,
+      "template": 119,
+      "order": 5,
+      "time": "19:00:00"
+    }
   }
 ]

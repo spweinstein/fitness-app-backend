@@ -1313,5 +1313,1077 @@
       "rpe": 7,
       "notes": "Tricep pushdowns to finish. Rest 60 sec."
     }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 110,
+    "fields": {
+      "user": 1,
+      "title": "Hip & Glute Mobility",
+      "description": "Targeted stretching routine for hip flexors and glutes.",
+      "is_public": true,
+      "parent": null,
+      "duration": 20
+    }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 111,
+    "fields": {
+      "user": 1,
+      "title": "Hamstring & Lower Body Flexibility",
+      "description": "Stretches for the hamstrings, quads, and calves.",
+      "is_public": true,
+      "parent": null,
+      "duration": 20
+    }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 112,
+    "fields": {
+      "user": 1,
+      "title": "Lower Back Relief Stretch",
+      "description": "Gentle spinal and lower back decompression stretches.",
+      "is_public": true,
+      "parent": null,
+      "duration": 20
+    }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 113,
+    "fields": {
+      "user": 1,
+      "title": "Shoulder & Chest Opener",
+      "description": "Opens the chest, front delts, and rear deltoids.",
+      "is_public": true,
+      "parent": null,
+      "duration": 20
+    }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 114,
+    "fields": {
+      "user": 1,
+      "title": "Thoracic & Upper Back Mobility",
+      "description": "Improves thoracic extension and upper back mobility.",
+      "is_public": true,
+      "parent": null,
+      "duration": 20
+    }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 115,
+    "fields": {
+      "user": 1,
+      "title": "Arms & Wrist Recovery",
+      "description": "Forearm, wrist, and arm stretches for recovery and injury prevention.",
+      "is_public": true,
+      "parent": null,
+      "duration": 15
+    }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 116,
+    "fields": {
+      "user": 1,
+      "title": "Full Lower Body Stretch",
+      "description": "Comprehensive stretch covering quads, hamstrings, glutes, hip flexors, and calves.",
+      "is_public": true,
+      "parent": null,
+      "duration": 30
+    }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 117,
+    "fields": {
+      "user": 1,
+      "title": "Full Upper Body Stretch",
+      "description": "Comprehensive stretch covering shoulders, chest, traps, and arms.",
+      "is_public": true,
+      "parent": null,
+      "duration": 25
+    }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 118,
+    "fields": {
+      "user": 1,
+      "title": "Morning Wake-Up Routine",
+      "description": "Gentle full-body stretching to ease into the day.",
+      "is_public": true,
+      "parent": null,
+      "duration": 20
+    }
+  },
+  {
+    "model": "main_app.workouttemplate",
+    "pk": 119,
+    "fields": {
+      "user": 1,
+      "title": "Post-Workout Cool-Down",
+      "description": "Full body cool-down targeting the most worked muscle groups.",
+      "is_public": true,
+      "parent": null,
+      "duration": 20
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1901,
+    "fields": {
+      "template": 110,
+      "exercise": 85,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1902,
+    "fields": {
+      "template": 110,
+      "exercise": 88,
+      "order": 2,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 45,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 45 seconds. Keep hips square."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1903,
+    "fields": {
+      "template": 110,
+      "exercise": 90,
+      "order": 3,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Gently press knees toward the floor."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1904,
+    "fields": {
+      "template": 110,
+      "exercise": 92,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds. Sit tall."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1905,
+    "fields": {
+      "template": 110,
+      "exercise": 93,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 45,
+      "distance": null,
+      "rpe": null,
+      "notes": "Widen knees only as far as comfortable."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1906,
+    "fields": {
+      "template": 110,
+      "exercise": 89,
+      "order": 6,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1911,
+    "fields": {
+      "template": 111,
+      "exercise": 84,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds. Keep knees together."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1912,
+    "fields": {
+      "template": 111,
+      "exercise": 86,
+      "order": 2,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Keep back flat as you reach forward."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1913,
+    "fields": {
+      "template": 111,
+      "exercise": 87,
+      "order": 3,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1914,
+    "fields": {
+      "template": 111,
+      "exercise": 89,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Keep heel flat on the floor."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1915,
+    "fields": {
+      "template": 111,
+      "exercise": 91,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Let the torso hang freely."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1921,
+    "fields": {
+      "template": 112,
+      "exercise": 94,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 45,
+      "distance": null,
+      "rpe": null,
+      "notes": "Breathe deeply and let the back relax."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1922,
+    "fields": {
+      "template": 112,
+      "exercise": 95,
+      "order": 2,
+      "sets": 1,
+      "reps": 10,
+      "weight": null,
+      "weight_unit": null,
+      "duration": null,
+      "distance": null,
+      "rpe": null,
+      "notes": "Move slowly with your breath, 1 rep per breath cycle."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1923,
+    "fields": {
+      "template": 112,
+      "exercise": 96,
+      "order": 3,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds. Sit tall."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1924,
+    "fields": {
+      "template": 112,
+      "exercise": 97,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Rock gently side to side to massage the lower back."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1925,
+    "fields": {
+      "template": 112,
+      "exercise": 98,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Reposition roller up the spine in 3 spots."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1931,
+    "fields": {
+      "template": 113,
+      "exercise": 99,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1932,
+    "fields": {
+      "template": 113,
+      "exercise": 100,
+      "order": 2,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Keep core braced as you lean through the doorway."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1933,
+    "fields": {
+      "template": 113,
+      "exercise": 101,
+      "order": 3,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds. Do not force range."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1934,
+    "fields": {
+      "template": 113,
+      "exercise": 103,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Perform small circles 30 seconds, then reverse direction."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1935,
+    "fields": {
+      "template": 113,
+      "exercise": 104,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1941,
+    "fields": {
+      "template": 114,
+      "exercise": 98,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Work through 3 positions up the thoracic spine."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1942,
+    "fields": {
+      "template": 114,
+      "exercise": 105,
+      "order": 2,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1943,
+    "fields": {
+      "template": 114,
+      "exercise": 106,
+      "order": 3,
+      "sets": 1,
+      "reps": 10,
+      "weight": null,
+      "weight_unit": null,
+      "duration": null,
+      "distance": null,
+      "rpe": null,
+      "notes": "5 second hold at end range each rep."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1944,
+    "fields": {
+      "template": 114,
+      "exercise": 107,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1945,
+    "fields": {
+      "template": 114,
+      "exercise": 108,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1951,
+    "fields": {
+      "template": 115,
+      "exercise": 102,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1952,
+    "fields": {
+      "template": 115,
+      "exercise": 109,
+      "order": 2,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1953,
+    "fields": {
+      "template": 115,
+      "exercise": 110,
+      "order": 3,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds. Do not force."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1954,
+    "fields": {
+      "template": 115,
+      "exercise": 111,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1955,
+    "fields": {
+      "template": 115,
+      "exercise": 112,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Slowly lower hands while keeping palms together."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1956,
+    "fields": {
+      "template": 115,
+      "exercise": 113,
+      "order": 6,
+      "sets": 1,
+      "reps": 10,
+      "weight": null,
+      "weight_unit": null,
+      "duration": null,
+      "distance": null,
+      "rpe": null,
+      "notes": "10 slow rotations each arm, pause 5 sec at end range."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1961,
+    "fields": {
+      "template": 116,
+      "exercise": 84,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1962,
+    "fields": {
+      "template": 116,
+      "exercise": 85,
+      "order": 2,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1963,
+    "fields": {
+      "template": 116,
+      "exercise": 86,
+      "order": 3,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Keep back flat as you hinge forward."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1964,
+    "fields": {
+      "template": 116,
+      "exercise": 87,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1965,
+    "fields": {
+      "template": 116,
+      "exercise": 88,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 45,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 45 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1966,
+    "fields": {
+      "template": 116,
+      "exercise": 89,
+      "order": 6,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Keep heel flat on the floor."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1967,
+    "fields": {
+      "template": 116,
+      "exercise": 92,
+      "order": 7,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1971,
+    "fields": {
+      "template": 117,
+      "exercise": 99,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1972,
+    "fields": {
+      "template": 117,
+      "exercise": 100,
+      "order": 2,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Lean gently through the doorway."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1973,
+    "fields": {
+      "template": 117,
+      "exercise": 102,
+      "order": 3,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1974,
+    "fields": {
+      "template": 117,
+      "exercise": 105,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1975,
+    "fields": {
+      "template": 117,
+      "exercise": 107,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1981,
+    "fields": {
+      "template": 118,
+      "exercise": 94,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 45,
+      "distance": null,
+      "rpe": null,
+      "notes": "Breathe deeply and let the back soften."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1982,
+    "fields": {
+      "template": 118,
+      "exercise": 95,
+      "order": 2,
+      "sets": 1,
+      "reps": 10,
+      "weight": null,
+      "weight_unit": null,
+      "duration": null,
+      "distance": null,
+      "rpe": null,
+      "notes": "Move with your breath. Slow and controlled."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1983,
+    "fields": {
+      "template": 118,
+      "exercise": 96,
+      "order": 3,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1984,
+    "fields": {
+      "template": 118,
+      "exercise": 99,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1985,
+    "fields": {
+      "template": 118,
+      "exercise": 85,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1986,
+    "fields": {
+      "template": 118,
+      "exercise": 86,
+      "order": 6,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Keep back flat as you reach forward."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1991,
+    "fields": {
+      "template": 119,
+      "exercise": 84,
+      "order": 1,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1992,
+    "fields": {
+      "template": 119,
+      "exercise": 87,
+      "order": 2,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1993,
+    "fields": {
+      "template": 119,
+      "exercise": 88,
+      "order": 3,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 45,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 45 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1994,
+    "fields": {
+      "template": 119,
+      "exercise": 94,
+      "order": 4,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 45,
+      "distance": null,
+      "rpe": null,
+      "notes": "Let the back fully relax."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1995,
+    "fields": {
+      "template": 119,
+      "exercise": 99,
+      "order": 5,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
+  },
+  {
+    "model": "main_app.workouttemplateitem",
+    "pk": 1996,
+    "fields": {
+      "template": 119,
+      "exercise": 102,
+      "order": 6,
+      "sets": 1,
+      "reps": null,
+      "weight": null,
+      "weight_unit": null,
+      "duration": 30,
+      "distance": null,
+      "rpe": null,
+      "notes": "Hold each side for 30 seconds."
+    }
   }
 ]

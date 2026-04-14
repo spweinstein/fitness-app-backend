@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
+
 load_dotenv(override=True)
 
 import dj_database_url  
@@ -33,10 +35,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-a^hyu87=6_@rw-mwu&@6bburo6ib!7=5sj03o-!&9##j9kq0%m'
-# NEW
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-insecure-key")  # NEW
-DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"     # NEW
+# DEBUG must be defined before SECRET_KEY so non-debug deploys cannot fall back to a dev key.
+DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
+
+_django_secret_key = (os.getenv("DJANGO_SECRET_KEY") or "").strip()
+if not DEBUG and not _django_secret_key:
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY must be set when DEBUG is False. "
+        "Set DJANGO_SECRET_KEY in the environment for production/staging."
+    )
+SECRET_KEY = _django_secret_key or "dev-insecure-key"
 
 ALLOWED_HOSTS = os.getenv(                                      # NEW
     "DJANGO_ALLOWED_HOSTS",

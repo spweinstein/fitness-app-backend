@@ -20,6 +20,8 @@ Adjust commands if you use another virtualenv workflow, but Pipenv is what this 
 
 Copy `.env.example` to `.env`. Settings load via `python-dotenv` in `hw_app/settings.py` (`load_dotenv(override=True)`).
 
+**Production:** Set `DJANGO_SECRET_KEY` to a strong secret. When `DJANGO_DEBUG` is false (or unset), Django will refuse to start if `DJANGO_SECRET_KEY` is missing, so deployments without a dev fallback key cannot boot accidentally.
+
 ## Legacy
 
 **`hw-app-backend`** is **read-only** reference during migration; new backend work belongs here.

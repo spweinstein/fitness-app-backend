@@ -1,15 +1,20 @@
 from datetime import date, datetime, time as time_cls, timedelta
+from unittest.mock import MagicMock
 
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from .admin import create_workout_from_template
 from .models import (
+    Exercise,
     Workout,
+    WorkoutItem,
     WorkoutPlan,
     WorkoutTemplate,
+    WorkoutTemplateItem,
     WorkoutTemplatePlan,
 )
 from .services.workout_scheduling import (
@@ -159,3 +164,103 @@ class PlanGenerateAPITests(TestCase):
         )
         ids = resp.data.get("workout_ids") or []
         self.assertEqual(len(ids), 2)
+
+
+class WorkoutPlanTemplateLinksAuthzTests(TestCase):
+    """Regression: update() must enforce the same template access rules as create()."""
+
+    def setUp(self):
+        self.user_a = User.objects.create_user("alice", password="testpass123")
+        self.user_b = User.objects.create_user("bob", password="testpass123")
+        self.client = APIClient()
+        Exercise.objects.create(name="Bench Press", exercise_type="strength")
+        self.tpl_own = WorkoutTemplate.objects.create(
+            user=self.user_a, title="Mine", duration=60
+        )
+        self.tpl_private_b = WorkoutTemplate.objects.create(
+            user=self.user_b, title="Secret", duration=60, is_public=False
+        )
+        self.tpl_public = WorkoutTemplate.objects.create(
+            user=self.user_b, title="Shared", duration=60, is_public=True
+        )
+        self.plan = WorkoutPlan.objects.create(user=self.user_a, title="My Plan")
+
+    def _link_payload(self, template):
+        return {
+            "template_links": [
+                {
+                    "template": template.id,
+                    "order": 0,
+                    "time": "09:30:00",
+                }
+            ]
+        }
+
+    def test_patch_rejects_other_users_private_template(self):
+        self.client.force_authenticate(user=self.user_a)
+        url = f"/api/workout-plans/{self.plan.id}/"
+        resp = self.client.patch(
+            url, self._link_payload(self.tpl_private_b), format="json"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_patch_allows_own_template(self):
+        self.client.force_authenticate(user=self.user_a)
+        url = f"/api/workout-plans/{self.plan.id}/"
+        resp = self.client.patch(
+            url, self._link_payload(self.tpl_own), format="json"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(resp.data.get("template_links", [])), 1)
+
+    def test_patch_allows_public_template(self):
+        self.client.force_authenticate(user=self.user_a)
+        url = f"/api/workout-plans/{self.plan.id}/"
+        resp = self.client.patch(
+            url, self._link_payload(self.tpl_public), format="json"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(resp.data.get("template_links", [])), 1)
+
+
+class CreateWorkoutFromTemplateAdminActionTests(TestCase):
+    """Admin action maps WorkoutTemplateItem fields to WorkoutItem with correct names."""
+
+    def setUp(self):
+        self.user = User.objects.create_user("stafftpl", password="testpass123")
+        self.ex = Exercise.objects.create(name="Squat", exercise_type="strength")
+        self.template = WorkoutTemplate.objects.create(
+            user=self.user, title="Leg day", duration=90
+        )
+        WorkoutTemplateItem.objects.create(
+            template=self.template,
+            exercise=self.ex,
+            order=2,
+            sets=3,
+            reps=5,
+            duration=120,
+            distance=400,
+            distance_unit="km",
+            rpe=8,
+            notes="keep chest up",
+        )
+
+    def test_action_copies_prescription_fields_to_workout_items(self):
+        factory = RequestFactory()
+        request = factory.post("/admin/")
+        request.user = self.user
+        modeladmin = MagicMock()
+        create_workout_from_template(
+            modeladmin, request, WorkoutTemplate.objects.filter(pk=self.template.pk)
+        )
+        workout = Workout.objects.get(template=self.template)
+        item = workout.items.get()
+        self.assertEqual(item.order, 2)
+        self.assertEqual(item.sets, 3)
+        self.assertEqual(item.reps, 5)
+        self.assertEqual(item.duration, 120)
+        self.assertEqual(item.distance, 400)
+        self.assertEqual(item.distance_unit, "km")
+        self.assertEqual(item.rpe, 8)
+        self.assertEqual(item.notes, "keep chest up")
+        self.assertEqual(WorkoutItem.objects.filter(workout=workout).count(), 1)

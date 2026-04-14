@@ -27,7 +27,7 @@ _DEFAULT_TRUSTED_ORIGINS = [
     "https://fitness-app-backend.up.railway.app"
 ]
 
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", ",".join(_DEFAULT_TRUSTED_ORIGINS)).split(",")
+CORS_ALLOWED_ORIGINS = os.getenv("CORS_TRUSTED_ORIGINS", ",".join(_DEFAULT_TRUSTED_ORIGINS)).split(",")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

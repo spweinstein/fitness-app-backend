@@ -19,17 +19,6 @@ load_dotenv(override=True)
 
 import dj_database_url  
 
-_DEFAULT_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "https://healthwealthapp.netlify.app",
-    "https://hw-fitness.netlify.app",
-    "https://fitness-app-frontend.netlify.app",
-    "https://fitness-app-backend.up.railway.app"
-]
-
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_TRUSTED_ORIGINS", ",".join(_DEFAULT_TRUSTED_ORIGINS)).split(",")
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -49,15 +38,32 @@ if not DEBUG and not _django_secret_key:
     )
 SECRET_KEY = _django_secret_key or "dev-insecure-key"
 
-ALLOWED_HOSTS = os.getenv(                                      # NEW
-    "DJANGO_ALLOWED_HOSTS",
-    ",".join(_DEFAULT_TRUSTED_ORIGINS)
-).split(",")
+# Bare hostnames only (no scheme). Example: myapp.up.railway.app,localhost
+_allowed_hosts_env = (os.getenv("DJANGO_ALLOWED_HOSTS") or "").strip()
+if not _allowed_hosts_env:
+    raise ImproperlyConfigured(
+        "DJANGO_ALLOWED_HOSTS must be set. "
+        "Provide a comma-separated list of bare hostnames (no scheme), e.g. myapp.up.railway.app,localhost"
+    )
+ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts_env.split(",") if h.strip()]
 
-CSRF_TRUSTED_ORIGINS = os.getenv(                               # NEW
-    "CSRF_TRUSTED_ORIGINS",
-    ",".join(_DEFAULT_TRUSTED_ORIGINS)
-).split(",")
+# Full origin URLs with scheme (no trailing slash). Example: https://myapp.netlify.app,http://localhost:5173
+_cors_origins_env = (os.getenv("CORS_ALLOWED_ORIGINS") or "").strip()
+if not _cors_origins_env:
+    raise ImproperlyConfigured(
+        "CORS_ALLOWED_ORIGINS must be set. "
+        "Provide a comma-separated list of full origin URLs, e.g. https://myapp.netlify.app,http://localhost:5173"
+    )
+CORS_ALLOWED_ORIGINS = [o.strip() for o in _cors_origins_env.split(",") if o.strip()]
+
+# Full origin URLs with scheme (no trailing slash). Controls trusted origins for CSRF (admin panel, session views).
+_csrf_origins_env = (os.getenv("CSRF_TRUSTED_ORIGINS") or "").strip()
+if not _csrf_origins_env:
+    raise ImproperlyConfigured(
+        "CSRF_TRUSTED_ORIGINS must be set. "
+        "Provide a comma-separated list of full origin URLs, e.g. https://myapp.up.railway.app,http://localhost:5173"
+    )
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf_origins_env.split(",") if o.strip()]
 
 from datetime import timedelta
 

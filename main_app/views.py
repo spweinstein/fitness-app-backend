@@ -24,6 +24,8 @@ from rest_framework import status
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.http import Http404
 from rest_framework.exceptions import PermissionDenied
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
 
 from .services.workout_scheduling import (
     WorkoutScheduleConflictError,
@@ -71,18 +73,27 @@ class LoginView(APIView):
     return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 # User Verification
-class VerifyUserView(APIView):
+class CurrentUserView(APIView):
   permission_classes = [permissions.IsAuthenticated]
 
   def get(self, request):
     user = request.user
-    refresh = RefreshToken.for_user(user)
+    # refresh = RefreshToken.for_user(user)
     return Response({
-      'refresh': str(refresh),
-      'access': str(refresh.access_token),
       'user': UserSerializer(user).data
     })
-  
+
+class RefreshTokenView(APIView):
+  permission_classes = [permissions.AllowAny]
+
+  def post(self, request):
+    refresh_str = request.data.get('refresh')
+    try:
+        refresh_obj = RefreshToken(refresh_str)   # validates signature, expiry
+    except TokenError:
+        return Response({'error': 'Invalid or expired refresh token'}, status=400)
+    return Response({'access': str(refresh_obj.access_token)})
+
 class IsOwnerOrReadOnlyPublic(permissions.BasePermission):
     """
     - Owners can do anything.
